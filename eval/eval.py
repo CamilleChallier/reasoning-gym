@@ -236,7 +236,7 @@ class AsyncModelEvaluator:
         else:
             # Original format for multiple categories
             output_dir = Path(self.config.output_dir) / f"{model_name}_{timestamp}"
-
+        output_dir = Path(str(output_dir).replace(":", "_")) # NEW
         output_dir.mkdir(parents=True, exist_ok=True)
         return output_dir
 
@@ -296,12 +296,16 @@ class AsyncModelEvaluator:
         Raises:
             Exception: If all retries fail
         """
+        print(self.config.model)
+        print(self.config.system_role)
+        print(self.config.get_system_prompt())
+        print(prompt)
         max_retries = 10
         base_delay = 1.0
         max_delay = 60.0
         backoff_factor = 2.0
-
         for attempt in range(max_retries):
+            print(attempt)
             try:
                 async with self.semaphore:
                     # Prepare API call parameters
@@ -484,7 +488,6 @@ class AsyncModelEvaluator:
             # Only include metadata if configured to do so
             if self.config.save_metadata:
                 result["metadata"] = entry["metadata"]
-
             return result
 
         except Exception as e:
@@ -538,11 +541,10 @@ class AsyncModelEvaluator:
             self.checkpoint_manager.completed_datasets.discard(f"{category_name}/{dataset_name}")
 
         self.logger.info(f"Evaluating dataset: {dataset_name}")
-
+        print("dataset")
         try:
             # Create dataset with all parameters
             dataset_params = {}
-
             # Add all parameters from the config params dictionary
             # Make sure we don't have a nested 'params' dictionary
             for k, v in dataset_config.params.items():
@@ -562,7 +564,6 @@ class AsyncModelEvaluator:
 
             # Get all entries
             all_entries = list(dataset)
-
             # Process entries with progress bar, passing the entry index and dataset name
             tasks = [self.process_entry(dataset, entry, idx, dataset_name) for idx, entry in enumerate(all_entries)]
             results = await tqdm_asyncio.gather(*tasks, desc=f"Processing {dataset_name}", leave=True)
@@ -588,7 +589,7 @@ class AsyncModelEvaluator:
             # Mark dataset as completed and save results
             self.checkpoint_manager.mark_dataset_completed(category_name, dataset_name)
             self._save_dataset_results(category_name, dataset_name, dataset_results)
-
+            print(dataset_results)
             return dataset_results
 
         except Exception as e:
@@ -616,7 +617,6 @@ class AsyncModelEvaluator:
         """
         category_name = category_config.category
         self.logger.info(f"Evaluating category: {category_name}")
-
         # Check if all datasets in this category are already completed
         all_completed = True
         for dataset_config in category_config.datasets:
@@ -654,13 +654,11 @@ class AsyncModelEvaluator:
         # Initialize output directory and checkpoint manager
         self.output_dir = self.create_output_dir()
         self.checkpoint_manager = CheckpointManager(self.output_dir)
-
         # Process each category sequentially to ensure proper checkpointing
         category_results = []
         for category in self.config.categories:
             category_result = await self.evaluate_category(category)
             category_results.append(category_result)
-
             # Update partial summary after each category
             self._update_partial_summary(category_results)
 
@@ -887,7 +885,6 @@ async def main_async():
     evaluator = AsyncModelEvaluator(
         config=config, api_key=api_key, base_url=args.base_url, verbose=args.verbose, debug=args.debug
     )
-
     # Set resume directory if specified
     if args.resume:
         evaluator.resume_dir = args.resume

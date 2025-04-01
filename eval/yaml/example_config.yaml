@@ -1,0 +1,12 @@
+# Example configuration for the evaluation script
+model: "/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-3b-1000k"
+provider: null
+output_dir: "results"
+max_concurrent: 10
+default_size: 20  # Default size for all datasets
+default_seed: 42  # Default seed for all datasets
+
+categories:
+  - category: "arithmetic"
+    datasets:
+      - dataset: "chain_sum"
