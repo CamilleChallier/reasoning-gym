@@ -1,5 +1,7 @@
 # Example configuration for the evaluation script
-model: "/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-3b-1000k"
+model: "/capstor/store/cscs/swissai/a10/swiss-alignment/checkpoints/apertus3-8b-iter_90000-tulu3-sft/checkpoint-7270"
+#"/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-8b-884k"
+# model: Qwen/Qwen2.5-1.5B-Instruct
 provider: null
 output_dir: "results"
 max_concurrent: 10
@@ -10,3 +12,9 @@ categories:
   - category: "arithmetic"
     datasets:
       - dataset: "chain_sum"
+  - category: algebra
+    datasets:
+    - dataset: simple_equations
+  - category: algorithmic
+    datasets:
+    - dataset: base_conversion
