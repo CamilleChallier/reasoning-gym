@@ -27,21 +27,25 @@ echo "Checking CUDA devices..."
 python -c "import torch; print(torch.cuda.get_device_name()); print(torch.cuda.device_count())"
 
 # Change directory to evaluation script location
-cd /capstor/scratch/cscs/camillechallier/transformers/
-echo "Current directory: $(pwd)"
-
-git checkout swissai-model
-pip install .
-
-pip install --no-cache-dir --upgrade reasoning-gym
+cd /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/
+# cp /capstor/scratch/cscs/camillechallier/vllm-build/swissai.py /workspace/.venv/lib/python3.12/site-packages/vllm/model_executor/models
+# cp /capstor/scratch/cscs/camillechallier/vllm-build/activation.py /workspace/.venv/lib/python3.12/site-packages/vllm/model_executor/layers/activation.py
 
 # Set environment variables
-export HF_HOME="/capstor/scratch/cscs/camillechallier/.cache/"
-export TRANSFORMERS_CACHE="/capstor/scratch/cscs/camillechallier/.cache/"
-export VLLM_CACHE_DIR="/capstor/scratch/cscs/camillechallier/.cache/vllm"
+# export HF_HOME="/capstor/scratch/cscs/camillechallier/.cache/"
+# export TRANSFORMERS_CACHE="/capstor/scratch/cscs/camillechallier/.cache/"
+# export VLLM_CACHE_DIR="/capstor/scratch/cscs/camillechallier/.cache/vllm"
 
 # Run the Python script using srun
 # python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config Qwen_config.yaml --model "Qwen/Qwen2.5-1.5B-Instruct"
-python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config DeepSeekR1_config.yaml --model "meta-llama/Llama-3.3-70B-Instruct"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-8b-884k"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-3b-1000k"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "/capstor/store/cscs/swissai/a06/main_run_megatron/hf-checkpoints/apertus3-1b-1690k"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "meta-llama/Llama-3.2-1B"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "meta-llama/Llama-3.2-1B-Instruct"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "meta-llama/Llama-3.1-8B"
+# python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "meta-llama/Llama-3.1-8B-Instruct"
+python /capstor/scratch/cscs/camillechallier/reasoning-gym/eval/eval_vllm.py --config "yaml/example_config.yaml" --model "/capstor/store/cscs/swissai/a10/swiss-alignment/checkpoints/apertus3-8b-iter_90000-tulu3-sft/checkpoint-7270"
 
 # sbatch --environment=my_env --account=a-a06 --time=07:00:00 sbatch.sh
+# image = "/iopsstor/scratch/cscs/camillechallier/vllm_swissai.sqsh"

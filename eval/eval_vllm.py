@@ -89,7 +89,7 @@ class AsyncModelEvaluator:
             logging.getLogger("httpx").setLevel(logging.WARNING)
 
         print(model)
-        self.client = LLM(model=model)
+        self.client = LLM(model=model, tensor_parallel_size=4)
 
         # Concurrency control
         self.semaphore = asyncio.Semaphore(config.max_concurrent)
@@ -120,8 +120,8 @@ class AsyncModelEvaluator:
                 async with self.semaphore:
                     
                     conversation = [
-                                {"role": self.config.system_role, "content": self.config.get_system_prompt()},
-                                {"role": "user", "content": prompt + "Answer simply with <answer>answer here</answer>."},
+                                {"role": self.config.system_role, "content": "<s>" + self.config.get_system_prompt()},
+                                {"role": "user", "content": prompt + "Answer by <answer>INSERT ANSWER</answer> :"},
                                 ]
 
                     # Add sampling parameters if specified
@@ -134,7 +134,9 @@ class AsyncModelEvaluator:
                         params["top_p"] = self.config.top_p
                         
                     parameters = SamplingParams(**params)
-                    completion = self.client.chat(conversation, parameters)
+                    # completion = self.client.chat(conversation, parameters)
+                    prompt_str = f"{self.config.get_system_prompt()}\nUser: {prompt} Answer by <answer>INSERT ANSWER</answer>:"
+                    completion = self.client.generate(prompt_str, parameters)
                     response = completion[0].outputs[0].text
                     if self.verbose:
                         self.logger.info(f"Prompt: {prompt}")
@@ -560,11 +562,8 @@ def main():
 
 if __name__ == "__main__":
     
-    import sys
-    sys.path.append("/capstor/scratch/cscs/camillechallier/vllm/vllm_sa/model_executor/models/") 
-    import swissai
-    
-    from vllm import ModelRegistry
-    ModelRegistry.register_model("SwissAIForCausalLM", swissai.SwissAIForCausalLM)
+    from vllm import ModelRegistry    
+    from vllm.model_executor.models.swissai import SwissAIForCausalLM
+    ModelRegistry.register_model("SwissAIForCausalLM", SwissAIForCausalLM)
 
     main()
