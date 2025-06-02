@@ -333,21 +333,21 @@ class ManipulateMatrixCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="rows",
-                levels=[10, 25, 50, 100],
+                levels=[(2,2), (2,10), (2,50), (2,100)],
                 description="Number of rows in the matrix",
                 lower_field_name="min_rows",
                 upper_field_name="max_rows",
             ),
             RangeAttributeDefinition(
                 name="cols",
-                levels=[10, 25, 50, 100],
+                levels=[(2,2), (2,10), (2,50), (2,100)],
                 description="Number of columns in the matrix",
                 lower_field_name="min_cols",
                 upper_field_name="max_cols",
             ),
             RangeAttributeDefinition(
                 name="num_transforms",
-                levels=[5, 10, 20, 30],
+                levels=[(1,2), (1,5), (1,10), (1,20)],
                 description="Number of transformations to apply",
                 lower_field_name="min_transforms",
                 upper_field_name="max_transforms",

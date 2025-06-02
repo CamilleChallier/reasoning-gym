@@ -281,12 +281,20 @@ class WordLadderCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="word_length",
-                levels=[3, 4, 5, 6],
+                levels=[(3,3), (3,4), (3,5), (3,6)],
                 description="Length of words in the puzzle",
                 lower_field_name="min_word_length",
                 upper_field_name="max_word_length",
                 ensure_interval=True,
-            )
+            ),
+            RangeAttributeDefinition(
+                name="chain_length",
+                levels=[(-1,3), (-1,4), (-1,5), (-1,6), (-1,-1)],
+                description="Minimum number of steps (including start and end) in the transformation",
+                lower_field_name="min_chain_length",
+                upper_field_name="max_chain_length",
+                ensure_interval=True,
+            ),
         )
 
 

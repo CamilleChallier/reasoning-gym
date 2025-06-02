@@ -33,7 +33,7 @@ class StringManipulationConfig:
 
     min_string_length: int = 5  # Minimum string length
     max_string_length: int = 20  # Maximum string length
-    min_num_rules: int = 3  # Minimum number of rules/transforms
+    min_num_rules: int = 1  # Minimum number of rules/transforms
     max_num_rules: int = 8  # Maximum number of rules/transforms
 
     size: int = 500  # Virtual dataset size
@@ -205,14 +205,14 @@ class StringManipulationCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="string_length",
-                levels=[10, 50, 100, 500],
+                levels=[(5,5), (5,50), (5,100), (5,500)],
                 description="Length of the string",
                 lower_field_name="min_string_length",
                 upper_field_name="max_string_length",
             ),
             RangeAttributeDefinition(
                 name="num_rules",
-                levels=[5, 10, 15, 20],
+                levels=[(1,2), (1,5), (1,10), (1,20)],
                 description="Number of rules to apply",
                 lower_field_name="min_num_rules",
                 upper_field_name="max_num_rules",

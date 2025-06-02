@@ -134,7 +134,7 @@ class PalindromeCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="length",
-                levels=[10, 50, 100, 500],
+                levels=[(3,3), (3,10), (3,50), (3,100)],
                 description="Length of the generated palindrome.",
                 lower_field_name="min_length",
                 upper_field_name="max_length",

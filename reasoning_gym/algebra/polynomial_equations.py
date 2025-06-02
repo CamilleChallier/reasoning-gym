@@ -284,17 +284,24 @@ class PolynomialEquationsCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="degree",
-                levels=[1, 2, 3, 4],
+                levels=[(1, 1), (1, 2), (1, 3), (1, 4)],
                 lower_field_name="min_degree",
                 upper_field_name="max_degree",
                 description="The degree of the polynomial equation",
             ),
             RangeAttributeDefinition(
                 name="terms",
-                levels=[2, 3, 4, 5],
+                levels=[(2, 2), (2, 3), (2, 4), (2, 5)],
                 lower_field_name="min_terms",
                 upper_field_name="max_terms",
                 description="The number of terms in the polynomial equation",
+            ),
+            RangeAttributeDefinition(
+                name="value",
+                levels=[(1, 10), (1, 100), (1, 1000), (1, 10000)],
+                lower_field_name="min_value",
+                upper_field_name="max_value",
+                description="The size of the values",
             ),
         )
 

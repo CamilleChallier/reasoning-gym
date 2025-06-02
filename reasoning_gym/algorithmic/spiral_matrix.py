@@ -155,7 +155,7 @@ class SpiralMatrixCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="n",
-                levels=[10, 25, 50, 100],
+                levels=[(2,3), (2,10), (2,25), (3,50)],
                 description="Number of rows/cols in the matrix",
                 lower_field_name="min_n",
                 upper_field_name="max_n",

@@ -141,21 +141,21 @@ class PoolMatrixCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="rows",
-                levels=[10, 25, 50, 100],
+                levels=[(2,2), (2,10), (2,25), (2,50)],
                 description="Board size",
                 lower_field_name="min_rows",
                 upper_field_name="max_rows",
             ),
             RangeAttributeDefinition(
                 name="cols",
-                levels=[10, 25, 50, 100],
+                levels=[(2,2), (2,10), (2,25), (2,50)],
                 description="Board size",
                 lower_field_name="min_cols",
                 upper_field_name="max_cols",
             ),
             RangeAttributeDefinition(
                 name="pool_size",
-                levels=[3, 5, 7, 9],
+                levels=[(1,2), (1,5), (1,7), (1,9)],
                 description="Pool size",
                 lower_field_name="min_pool_size",
                 upper_field_name="max_pool_size",

@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Any, Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 DATASET_NAME = "cryptarithm"
@@ -30,6 +30,7 @@ class CryptarithmConfig:
     allow_leading_zero: bool = False
     seed: Optional[int] = None
     size: int = 500  # Number of puzzle instances to generate
+    max_unique_digits: int = 6 # Maximum number of unique digits (letters) in the puzzle
 
     def validate(self):
         """Validate configuration parameters."""
@@ -94,7 +95,7 @@ class CryptarithmDataset(ProceduralDataset):
         # If we exceed 10 distinct digits, try again (pick new random numbers).
         # In practice, we can loop until success. But for demonstration, let's do a simple re-pick approach.
         # We'll do a while loop up to some attempts:
-        if len(digits_in_use) > 10:
+        if len(digits_in_use) > self.config.max_unique_digits:
             # Just do a recursion call to pick new numbers, ignoring current picks
             return self._create_single_puzzle(rng)
 
@@ -255,12 +256,18 @@ class CryptarithmCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="words",
-                levels=[2, 5, 10, 50],
+                levels=[(2, 2), (2, 5), (2, 10), (2, 50)],
                 description="Number of words in the cryptarithm puzzle",
                 lower_field_name="min_words",
                 upper_field_name="max_words",
                 ensure_interval=True,
-            )
+            ),
+            ScalarAttributeDefinition(
+                name="max_unique_digits",
+                field_name="max_unique_digits",
+                levels=[2, 5, 8, 10],
+                description="Maximum number of unique digits (letters) used in each puzzle",
+            ),
         )
 
 

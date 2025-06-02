@@ -147,7 +147,7 @@ class StringSplittingCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="initial_machines",
-                levels=[10, 50, 100, 500],
+                levels=[(0,3), (0,10), (0,50), (0,100)],
                 description="Number of initial machines",
                 lower_field_name="min_initial_machines",
                 upper_field_name="max_initial_machines",

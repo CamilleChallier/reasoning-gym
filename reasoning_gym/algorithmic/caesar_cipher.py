@@ -16,7 +16,7 @@ class CaesarCipherConfig:
     """Configuration for Caesar cipher task generation"""
 
     delimiter: str = "."  # Delimiter for splitting text into sentences
-    min_words: int = 3  # Minimum words per sentence
+    min_words: int = 1  # Minimum words per sentence
     max_words: int = 20  # Maximum words per sentence
     min_rotation: int = 1  # Minimum Caesar rotation
     max_rotation: int = 25  # Maximum Caesar rotation
@@ -102,14 +102,14 @@ class CaesarCipherCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="rotation",
-                levels=[5, 10, 15, 25],
+                levels=[(1, 2), (1, 5), (1, 10), (1, 20)],
                 description="Max rotation for cipher",
                 lower_field_name="min_rotation",
                 upper_field_name="max_rotation",
             ),
             RangeAttributeDefinition(
                 name="words",
-                levels=[5, 10, 15, 25],
+                levels=[(1, 1), (1, 3), (1, 8), (1, 15)],
                 description="Max number of words",
                 lower_field_name="min_words",
                 upper_field_name="max_words",

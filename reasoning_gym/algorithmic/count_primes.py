@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 QUESTION_TEMPLATE = """Count how many prime numbers there are between {start} and {end} (inclusive) ?"""
@@ -82,13 +82,18 @@ class CountPrimesCurriculum(BaseCurriculum):
 
         # Define attributes
         self._define_attributes(
-            RangeAttributeDefinition(
-                name="n",
-                levels=[1000, 10_000, 50_000, 100_000],
-                description="Up to which number to consider the primes",
-                lower_field_name="min_n",
-                upper_field_name="max_n",
-            )
+            ScalarAttributeDefinition(
+                name="min_n",
+                field_name="min_n",
+                levels=[1, 100, 5000, 10000],
+                description="Minimum value of the interval"
+            ),
+            ScalarAttributeDefinition(
+                name="max_n",
+                field_name="max_n",
+                levels=[100, 1000, 50000, 100000],
+                description="Maximum value of the interval"
+            ),
         )
 
 

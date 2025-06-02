@@ -91,9 +91,9 @@ class AsyncModelEvaluator:
         print(model)
         self.client = LLM(model=model, 
                           tensor_parallel_size=4,
-                            max_model_len=4096,
+                            max_model_len=2096,
                             gpu_memory_utilization=0.95,
-                            # pipeline_parallel_size=2
+                            # pipeline_parallel_size=4
                         )
 
         # Concurrency control
@@ -103,7 +103,7 @@ class AsyncModelEvaluator:
         self.git_hash = get_git_hash()
         self.start_time = datetime.now()
 
-    async def get_model_response(self, prompt: str) -> str:
+    async def get_model_response(self, prompt: str, apertus: bool) -> str:
         """Get response from model with retry logic via OpenRouter.
 
         Args:
@@ -134,6 +134,17 @@ class AsyncModelEvaluator:
                             )},
                             {"role": "user", "content": prompt + '\nPlease answer in this format:\n{"answer": "..." }'}
                         ]
+                        # conversation = [
+                        #     {"role": self.config.system_role,
+                        #    "content": (                               
+                        #     "You are an assistant that answers questions step-by-step.\n"
+                        #     "Start with an explanation under the heading '### Explanation'.\n"
+                        #     "Then write only the numeric final result under the heading '### Answer'.\n"
+                        #     "Do not repeat the question or the prompt. Do not write any extra text in the answer section, just the number."
+                        #     )},
+                        #     {"role": "user", "content": prompt }
+                        # ]
+
                     else : 
                         conversation = [
                                 {"role": self.config.system_role, "content": "<s>" + self.config.get_system_prompt()},
@@ -169,7 +180,7 @@ class AsyncModelEvaluator:
         raise Exception(f"Failed to get model response after {max_retries} attempts")
 
     async def process_entry(
-        self, dataset: reasoning_gym.dataset.ProceduralDataset, entry: dict[str, Any]
+        self, dataset: reasoning_gym.dataset.ProceduralDataset, entry: dict[str, Any], apertus: bool
     ) -> dict[str, Any]:
         """Process a single dataset entry.
 
@@ -181,22 +192,40 @@ class AsyncModelEvaluator:
             Dict with processing results
         """
         response = None
+        # print("response:", await self.get_model_response(entry["question"]), "\n*****\n")
         try:
             # Get model response first
-            response = await self.get_model_response(entry["question"])
+            response = await self.get_model_response(entry["question"], apertus=apertus)
 
             # Try to extract answer and score it
             try:
+                import re
                 if apertus : 
-                    unescaped = json.loads(response) if response.strip().startswith('"') else response
+                    # match = re.search(
+                    #                     r"(?:###\s*)?Answer:?\s*\n*([-+]?\d*\.?\d+)",
+                    #                     response,
+                    #                     flags=re.IGNORECASE
+                    #                 )
+                    # # print("matccccch",match, "maatch")
+                    # if match:
+                    #     model_answer = match.group(1).strip()
+                    # else:
+                    #     model_answer = match
+                    
+                    unescaped = json.loads(response) if isinstance(response, str) and response.strip().startswith('"') else response
+
+                    # If it's still a string, attempt to parse it again
                     if isinstance(unescaped, str):
                         parsed = json.loads(unescaped)
                     else:
                         parsed = unescaped
-                    answer = parsed.get("answer")
-                    if answer:
+
+                    # Try to extract the "answer" field
+                    answer = parsed.get("answer") if isinstance(parsed, dict) else None
+
+                    if isinstance(answer, str):
                         model_answer = answer.strip()
-                    else :
+                    else:
                         model_answer = answer
                 else : 
                     model_answer = extract_answer(response)
@@ -230,6 +259,7 @@ class AsyncModelEvaluator:
             if self.config.save_metadata:
                 result["metadata"] = entry["metadata"]
 
+            # print("extracted", model_answer)
             return result
 
         except Exception as e:
@@ -249,7 +279,7 @@ class AsyncModelEvaluator:
 
             return result
 
-    async def evaluate_dataset(self, category_name: str, dataset_config: DatasetConfig) -> dict[str, Any]:
+    async def evaluate_dataset(self, category_name: str, dataset_config: DatasetConfig, apertus:bool) -> dict[str, Any]:
         """Evaluate a single dataset.
 
         Args:
@@ -287,7 +317,7 @@ class AsyncModelEvaluator:
             all_entries = list(dataset)
 
             # Process entries with progress bar
-            tasks = [self.process_entry(dataset, entry) for entry in all_entries]
+            tasks = [self.process_entry(dataset, entry, apertus=apertus) for entry in all_entries]
             results = await tqdm_asyncio.gather(*tasks, desc=f"Processing {dataset_name}", leave=True)
 
             # Calculate metrics
@@ -317,7 +347,7 @@ class AsyncModelEvaluator:
                 "results": [],
             }
 
-    async def evaluate_category(self, category_config: CategoryConfig) -> dict[str, Any]:
+    async def evaluate_category(self, category_config: CategoryConfig, apertus:bool) -> dict[str, Any]:
         """Evaluate all datasets in a category.
 
         Args:
@@ -329,7 +359,7 @@ class AsyncModelEvaluator:
         category_name = category_config.category
         self.logger.info(f"Evaluating category: {category_name}")
 
-        tasks = [self.evaluate_dataset(category_name, dataset_config) for dataset_config in category_config.datasets]
+        tasks = [self.evaluate_dataset(category_name, dataset_config, apertus=apertus) for dataset_config in category_config.datasets]
 
         dataset_results = await asyncio.gather(*tasks)
 
@@ -338,7 +368,7 @@ class AsyncModelEvaluator:
             "datasets": dataset_results,
         }
 
-    async def evaluate_all(self) -> dict[str, Any]:
+    async def evaluate_all(self, apertus:bool) -> dict[str, Any]:
         """Evaluate all categories and datasets.
 
         Returns:
@@ -346,7 +376,7 @@ class AsyncModelEvaluator:
         """
         self.logger.info(f"Starting evaluation of {len(self.config.categories)} categories")
 
-        tasks = [self.evaluate_category(category) for category in self.config.categories]
+        tasks = [self.evaluate_category(category, apertus=apertus) for category in self.config.categories]
         category_results = await asyncio.gather(*tasks)
 
         # Generate results structure
@@ -522,9 +552,17 @@ async def main_async():
     parser.add_argument("--full-results", action="store_true", help="Save the full results file")
     parser.add_argument("--verbose", action="store_true", help="Print detailed model responses")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
+    parser.add_argument("--apertus", type=bool, default=False, help="Evaluation of Apertus model")
 
     args = parser.parse_args()
 
+
+    apertus = args.apertus
+    if apertus : 
+        from vllm import ModelRegistry    
+        from vllm.model_executor.models.swissai import SwissAIForCausalLM
+        ModelRegistry.register_model("SwissAIForCausalLM", SwissAIForCausalLM)
+        
     # Load configuration
     config_path = args.config
     if config_path.endswith(".yaml") or config_path.endswith(".yml"):
@@ -563,7 +601,7 @@ async def main_async():
 
     # Run evaluation
     try:
-        results = await evaluator.evaluate_all()
+        results = await evaluator.evaluate_all(apertus=apertus)
 
         # Save and print results
         results_path, summary_path = evaluator.save_results(results)
@@ -590,12 +628,5 @@ def main():
 
 
 if __name__ == "__main__":
-    
-    apertus = True
-    
-    if apertus : 
-        from vllm import ModelRegistry    
-        from vllm.model_executor.models.swissai import SwissAIForCausalLM
-        ModelRegistry.register_model("SwissAIForCausalLM", SwissAIForCausalLM)
 
     main()

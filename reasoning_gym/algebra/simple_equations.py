@@ -146,7 +146,7 @@ class SimpleEquationsCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="max_terms",
                 field_name="max_terms",
-                levels=[5, 10, 15, 20],
+                levels=[3, 10, 15, 20],
                 description="Maximum number of terms in simple equations",
             ),
             ScalarAttributeDefinition(
@@ -164,7 +164,7 @@ class SimpleEquationsCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="operators_weights",
                 field_name="operators_weights",
-                levels=[[0.4, 0.4, 0.2], [0.35, 0.35, 0.3], [0.3, 0.3, 0.4], [0.2, 0.2, 0.6]],
+                levels=[[0.6, 0.4, 0], [0.4, 0.4, 0.2], [0.3, 0.3, 0.4], [0.2, 0.2, 0.6]],
                 description="Weights for each operator in simple equations",
             ),
         )

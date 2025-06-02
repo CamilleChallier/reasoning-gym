@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 QUESTION_TEMPLATE = """Given two strings representing a ransom note and a magazine, return True if you can construct the ransom note using the letters in the magazine, and False otherwise.
@@ -123,19 +123,35 @@ class RansomNoteCurriculum(BaseCurriculum):
 
         # Define attributes
         self._define_attributes(
-            RangeAttributeDefinition(
-                name="note_length",
-                levels=[10, 50, 100, 500],
-                description="Length of the ransom note",
-                lower_field_name="min_note_length",
-                upper_field_name="max_note_length",
+            ScalarAttributeDefinition(
+                name="min_note_length",
+                field_name="min_note_length",
+                levels=[1, 5, 20, 100],  # easier to harder min note length
+                description="Minimum length of the ransom note",
             ),
-            RangeAttributeDefinition(
-                name="magazine_length",
-                levels=[50, 100, 500, 1000],
-                description="Length of the magazine",
-                lower_field_name="min_magazine_length",
-                upper_field_name="max_magazine_length",
+            ScalarAttributeDefinition(
+                name="max_note_length",
+                field_name="max_note_length",
+                levels=[5, 20, 500, 1000],  # easy to harder max note length
+                description="Maximum length of the ransom note",
+            ),
+            ScalarAttributeDefinition(
+                name="min_magazine_length",
+                field_name="min_magazine_length",
+                levels=[2, 10, 50, 100],  # easier to harder min magazine length
+                description="Minimum length of the magazine",
+            ),
+            ScalarAttributeDefinition(
+                name="max_magazine_length",
+                field_name="max_magazine_length",
+                levels=[10, 50, 500, 1000],  # easy to harder max magazine length
+                description="Maximum length of the magazine",
+            ),
+            ScalarAttributeDefinition(
+                name="p_solvable",
+                field_name="p_solvable",
+                levels=[1, 0.6, 0.5, 0.4],
+                description="Probability of generating a solvable sample",
             ),
         )
 

@@ -153,7 +153,7 @@ class StringSynthesisCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="initial_blocks",
-                levels=[10, 50, 100, 500],
+                levels=[(0,5), (0,10), (0,50), (0,100)],
                 description="Number of initial blocks",
                 lower_field_name="min_initial_blocks",
                 upper_field_name="max_initial_blocks",

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 DATASET_NAME = "number_filtering"
@@ -117,7 +117,7 @@ class NumberFilteringCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="numbers",
-                levels=[10, 100, 500, 1000],
+                levels=[(3,3), (3,10), (3,100), (3,200)],
                 description="How many numbers to sort",
                 lower_field_name="min_numbers",
                 upper_field_name="max_numbers",
@@ -125,19 +125,23 @@ class NumberFilteringCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="decimals",
-                levels=[0, 2, 4, 6],
+                levels=[(0,0), (0,2), (0,4), (0,6)],
                 description="Number of decimal places",
                 lower_field_name="min_decimals",
                 upper_field_name="max_decimals",
                 ensure_interval=True,
             ),
-            RangeAttributeDefinition(
-                name="value",
-                levels=[-10_000, 10_000],
-                description="Range of numbers to sort",
-                lower_field_name="min_value",
-                upper_field_name="max_value",
-                ensure_interval=True,
+            ScalarAttributeDefinition(
+                name="min_value",
+                field_name="min_value",
+                levels=[0, -100, -1000, -10_000],
+                description="Minimum value in the range",
+            ),
+            ScalarAttributeDefinition(
+                name="max_value",
+                field_name="max_value",
+                levels=[10, 100, 1000, 10_000],
+                description="Maximum value in the range",
             ),
         )
 

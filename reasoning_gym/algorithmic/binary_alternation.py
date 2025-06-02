@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 QUESTION_TEMPLATE = """Given a binary string, return the minimum number of character swaps to make it alternating, or -1 if it is impossible.
@@ -129,11 +129,17 @@ class BinaryAlternationCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="n",
-                levels=[10, 50, 500, 1000],
+                levels=[(5, 5), (5, 10), (5, 50), (5, 100)],
                 description="Number of bits in the binary string",
                 lower_field_name="min_n",
                 upper_field_name="max_n",
-            )
+            ),
+            ScalarAttributeDefinition(
+                name="p_solvable",
+                field_name="p_solvable",
+                levels=[1.0, 0.8, 0.6, 0.4],
+                description="Probability of generating a solvable sample",
+            ),
         )
 
 

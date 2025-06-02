@@ -132,7 +132,7 @@ class SentenceReorderingCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="words_in_sentence",
-                levels=[5, 20, 50, 100],
+                levels=[(3,3), (3,10), (3,50), (3,100)],
                 description="Number of words in the sentence",
                 lower_field_name="min_words_in_sentence",
                 upper_field_name="max_words_in_sentence",

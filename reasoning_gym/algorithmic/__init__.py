@@ -14,7 +14,7 @@ from .caesar_cipher import CaesarCipherConfig, CaesarCipherCurriculum, CaesarCip
 from .count_primes import CountPrimesConfig, CountPrimesCurriculum, CountPrimesDataset
 from .cryptarithm import CryptarithmConfig, CryptarithmCurriculum, CryptarithmDataset
 from .game_of_life import GameOfLifeConfig, GameOfLifeCurriculum, GameOfLifeDataset
-from .game_of_life_halting import GameOfLifeHaltingConfig, GameOfLifeHaltingDataset
+from .game_of_life_halting import GameOfLifeHaltingConfig, GameOfLifeHaltingCurriculum, GameOfLifeHaltingDataset
 from .graph_color import GraphColorConfig, GraphColorCurriculum, GraphColorDataset
 from .group_anagrams import GroupAnagramsConfig, GroupAnagramsCurriculum, GroupAnagramsDataset
 from .isomorphic_strings import IsomorphicStringsConfig, IsomorphicStringsCurriculum, IsomorphicStringsDataset
@@ -38,7 +38,7 @@ from .sentence_reordering import SentenceReorderingConfig, SentenceReorderingCur
 from .spell_backward import SpellBackwardConfig, SpellBackwardCurriculum, SpellBackwardDataset
 from .spiral_matrix import SpiralMatrixConfig, SpiralMatrixCurriculum, SpiralMatrixDataset
 from .string_insertion import StringInsertionConfig, StringInsertionCurriculum, StringInsertionDataset
-from .string_manipulation import StringManipulationConfig, StringManipulationDataset
+from .string_manipulation import StringManipulationConfig, StringManipulationCurriculum, StringManipulationDataset
 from .string_splitting import StringSplittingConfig, StringSplittingCurriculum, StringSplittingDataset
 from .string_synthesis import StringSynthesisConfig, StringSynthesisCurriculum, StringSynthesisDataset
 from .word_ladder import WordLadderConfig, WordLadderCurriculum, WordLadderDataset
@@ -67,6 +67,7 @@ __all__ = [
     "GameOfLifeCurriculum",
     "GameOfLifeHaltingConfig",
     "GameOfLifeHaltingDataset",
+    "GameOfLifeHaltingCurriculum",
     "LetterCountingConfig",
     "LetterCountingDataset",
     "LetterCountingCurriculum",

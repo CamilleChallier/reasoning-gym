@@ -230,6 +230,18 @@ class PolynomialMultiplicationCurriculum(BaseCurriculum):
                 levels=[4, 6, 8, 10],
                 description="Maximum number of polynomials being multiplied",
             ),
+             ScalarAttributeDefinition(
+                name="allow_cross_variable_product",
+                field_name="allow_cross_variable_product",
+                levels=["False", "False",  "True", "True"],
+                description="Allow cross-variable products in polynomials (e.g., xy)",
+            ),
+              ScalarAttributeDefinition(
+                name="allow_multivariate_polynomials",
+                field_name="allow_multivariate_polynomials",
+                levels= ["False", "False", "False", "True"],
+                description="Allow multivariate polynomials (e.g., 2x^2 + 3y)",
+            ),
         )
 
 

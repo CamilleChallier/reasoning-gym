@@ -17,7 +17,7 @@ DATASET_NAME = "letter_counting"
 class LetterCountingConfig:
     """Configuration for letter counting task generation"""
 
-    min_words: int = 5  # Minimum words in span
+    min_words: int = 3  # Minimum words in span
     max_words: int = 15  # Maximum words in span
     seed: Optional[int] = None
     size: int = 500  # Virtual dataset size
@@ -86,7 +86,7 @@ class LetterCountingCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="words",
-                levels=[10, 50, 100, 1000],
+                levels=[(3,3), (3,10), (3,100), (3,1000)],
                 description="Number of words in the span",
                 lower_field_name="min_words",
                 upper_field_name="max_words",

@@ -158,7 +158,7 @@ class GraphColorConfig:
     """Configuration for GraphColor puzzle generation"""
 
     num_colors: int = 3
-    min_num_vertices: int = 10
+    min_num_vertices: int = 4
     max_num_vertices: int = 10
     edge_probability: float = 0.1
     seed: Optional[int] = None
@@ -208,12 +208,12 @@ Vertices: {puzzle["vertices"]}
 Edges: {edges}
 Possible colors: {puzzle["color_options"]}
 
-Return your solution as a JSON map of vertices to colors. (For example: {{"0": 1, "1": 2, "2": 3}}.)
+Return your solution as a JSON map of vertices to colors. (For example: { '{\"answer\": {"0": 1, "1": 2, "2": 3} }'}.)
 """
 
         return {
             "question": question,
-            "answer": None,
+            "answer": json.dumps({str(k): v for k, v in solution.items()}),
             "metadata": {
                 "source_dataset": DATASET_NAME,
                 "source_index": idx,
@@ -262,7 +262,7 @@ class GraphColorCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_vertices",
-                levels=[10, 20, 25, 50],
+                levels=[(4, 10), (4, 20), (4,25), (4,50)],
                 description="Number of vertices in the graph",
                 lower_field_name="min_num_vertices",
                 upper_field_name="max_num_vertices",
@@ -272,6 +272,12 @@ class GraphColorCurriculum(BaseCurriculum):
                 field_name="num_colors",
                 levels=[5, 4, 3],
                 description="Number of colors in the graph",
+            ),
+            ScalarAttributeDefinition(
+                name="edge_probability",
+                field_name="edge_probability",
+                levels=[0.1, 0.2, 0.3, 0.4],
+                description="Probability of an edge existing between any two vertices",
             ),
         )
 

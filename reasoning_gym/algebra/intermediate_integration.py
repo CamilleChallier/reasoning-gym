@@ -294,7 +294,6 @@ class IntermediateIntegrationCurriculum(BaseCurriculum):
             )
         )
 
-
 register_dataset(
     DATASET_NAME,
     IntermediateIntegrationDataset,

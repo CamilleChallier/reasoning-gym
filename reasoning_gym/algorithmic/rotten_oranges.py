@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 QUESTION_TEMPLATE = """You are given an n x n grid where each cell can have one of three values:
@@ -142,11 +142,23 @@ class RottenOrangesCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="n",
-                levels=[10, 25, 50, 100],
+                levels=[(5,5), (5,25), (5,50), (5,100)],
                 description="Size of the square matrix",
                 lower_field_name="min_n",
                 upper_field_name="max_n",
-            )
+            ),
+            ScalarAttributeDefinition(
+                name="p_oranges",
+                field_name="p_oranges",
+                levels=[0.7, 0.8, 0.9, 0.95],
+                description="Probability of a cell containing an orange",
+            ),
+            ScalarAttributeDefinition(
+                name="p_rotten",
+                field_name="p_rotten",
+                levels=[0.05, 0.1, 0.2, 0.3],
+                description="Probability of an orange being rotten",
+            ),
         )
 
 

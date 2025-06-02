@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from random import Random
 from typing import Optional
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 QUESTION_TEMPLATE = """Two strings are isomorphic if the characters in one string can be replaced to get the second string.
@@ -131,11 +131,17 @@ class IsomorphicStringsCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="string_length",
-                levels=[10, 50, 100, 1000],
+                levels=[(2,10), (2,50), (2,100), (2,1000)],
                 description="Length of the strings",
                 lower_field_name="min_string_length",
                 upper_field_name="max_string_length",
-            )
+            ),
+            ScalarAttributeDefinition(
+                name="p_solvable",
+                field_name="p_solvable",
+                levels=[1, 0.6, 0.5, 0.4],
+                description="Probability of generating a solvable sample",
+            ),
         )
 
 

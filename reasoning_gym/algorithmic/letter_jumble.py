@@ -173,29 +173,30 @@ class LetterJumbleCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="word_len",
-                levels=[5, 15, 30, 50],
-                description="Word length",
+                levels=[(3, 5), (5, 15), (15, 30), (30, 50)],
+                description="Word length range",
                 lower_field_name="min_word_len",
                 upper_field_name="max_word_len",
                 ensure_interval=True,
             ),
             RangeAttributeDefinition(
                 name="words",
-                levels=[10, 50, 100, 500],
-                description="Number of words",
+                levels=[(1, 3), (5, 25), (25, 100), (100, 500)],
+                description="Number of words range",
                 lower_field_name="min_words",
                 upper_field_name="max_words",
                 ensure_interval=True,
             ),
             RangeAttributeDefinition(
                 name="corruption_level",
-                levels=[0.1, 0.3, 0.6, 0.9],
-                description="Corruption level",
+                levels=[(0, 0.05), (0.05, 0.2), (0.2, 0.6), (0.6, 0.9)],
+                description="Corruption level range",
                 lower_field_name="min_corruption_level",
                 upper_field_name="max_corruption_level",
                 ensure_interval=True,
             ),
         )
+
 
 
 register_dataset(DATASET_NAME, LetterJumbleDataset, LetterJumbleConfig, LetterJumbleCurriculum)

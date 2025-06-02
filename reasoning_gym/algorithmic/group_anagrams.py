@@ -20,7 +20,7 @@ QUESTION_TEMPLATE = """An anagram is a word formed by rearranging the letters of
 
 Your job is to group the anagrams together. You can return the answer in any order.
 
-The output is a list of lists of strings, where each outer list contains a group of anagrams, e.g. [["eat", "tea"], ["tan", "nat"]].
+The output is a string of a list of lists of strings, where each outer list contains a group of anagrams, e.g. "[["eat", "tea"], ["tan", "nat"]]".
 
 Group the following list of words into anagrams:
 {words}
@@ -138,14 +138,14 @@ class GroupAnagramsCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="anagram_groups",
-                levels=[10, 100, 1_000, 10_000],
+                levels=[(2,3), (2,100), (2,1_000), (2,10_000)],
                 description="Number of anagram groups in the input",
                 lower_field_name="min_anagram_groups",
                 upper_field_name="max_anagram_groups",
             ),
             RangeAttributeDefinition(
                 name="words_per_group",
-                levels=[2, 5, 10, 20],
+                levels=[(2,2), (2,5), (2,10), (2,20)],
                 description="Number of words in a single anagram group",
                 lower_field_name="min_words_per_group",
                 upper_field_name="max_words_per_group",
