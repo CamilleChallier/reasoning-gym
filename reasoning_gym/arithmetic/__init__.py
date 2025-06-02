@@ -5,7 +5,7 @@ Arithmetic tasks for training reasoning capabilities:
 from .basic_arithmetic import BasicArithmeticCurriculum, BasicArithmeticDataset, BasicArithmeticDatasetConfig
 from .bitwise_arithmetic import BitwiseArithmeticConfig, BitwiseArithmeticCurriculum, BitwiseArithmeticDataset
 from .calendar_arithmetic import CalendarArithmeticConfig, CalendarArithmeticCurriculum, CalendarArithmeticDataset
-from .chain_sum import ChainSumConfig, ChainSumDataset
+from .chain_sum import ChainSumConfig, ChainSumCurriculum, ChainSumDataset
 from .count_bits import CountBitsConfig, CountBitsCurriculum, CountBitsDataset
 from .decimal_arithmetic import DecimalArithmeticConfig, DecimalArithmeticCurriculum, DecimalArithmeticDataset
 from .decimal_chain_sum import DecimalChainSumConfig, DecimalChainSumCurriculum, DecimalChainSumDataset
@@ -22,7 +22,7 @@ from .leg_counting import LegCountingConfig, LegCountingCurriculum, LegCountingD
 from .number_format import NumberFormatConfig, NumberFormatCurriculum, NumberFormatDataset
 from .power_function import PowerFunctionConfig, PowerFunctionCurriculum, PowerFunctionDataset
 from .prime_factorization import PrimeFactorizationConfig, PrimeFactorizationCurriculum, PrimeFactorizationDataset
-from .products import ProductsConfig, ProductsDataset
+from .products import ProductsConfig, ProductsCurriculum, ProductsDataset
 from .time_intervals import TimeIntervalsConfig, TimeIntervalsCurriculum, TimeIntervalsDataset
 
 __all__ = [
@@ -31,6 +31,7 @@ __all__ = [
     "BasicArithmeticCurriculum",
     "ChainSumDataset",
     "ChainSumConfig",
+    "ChainSumCurriculum",
     "CalendarArithmeticConfig",
     "CalendarArithmeticDataset",
     "CalendarArithmeticCurriculum",
@@ -53,6 +54,7 @@ __all__ = [
     "PrimeFactorizationCurriculum",
     "ProductsDataset",
     "ProductsConfig",
+    "ProductsCurriculum",
     "GSMSymbolicDatasetConfig",
     "GSMSymbolicDataset",
     "TimeIntervalsConfig",

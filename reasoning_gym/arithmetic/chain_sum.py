@@ -4,7 +4,7 @@ from typing import Any, Optional
 
 from reasoning_gym import utils
 
-from ..coaching import BaseCurriculum, RangeAttributeDefinition
+from ..coaching import BaseCurriculum, RangeAttributeDefinition, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
 DATASET_NAME = "chain_sum"
@@ -142,6 +142,12 @@ class ChainSumCurriculum(BaseCurriculum):
                 description="Number of digits in each operand",
                 lower_field_name="min_digits",
                 upper_field_name="max_digits",
+            ),
+            ScalarAttributeDefinition(
+                name="allow_negation",
+                field_name="allow_negation",
+                levels=[False, False, False, False, False, True, True, True, True, True],
+                description= "Whether to allow negative numbers in the expression",
             ),
         )
 
