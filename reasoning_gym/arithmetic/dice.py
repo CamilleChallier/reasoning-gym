@@ -165,13 +165,13 @@ class DiceCurriculum(BaseCurriculum):
         self._define_attributes(
             ScalarAttributeDefinition(
                 name="num_dice",
-                levels=[4, 5, 6, 7],
+                levels=[2, 4, 6, 6],
                 description="Number of dice to roll",
                 field_name="num_dice",
             ),
             ScalarAttributeDefinition(
                 name="max_dice_size",
-                levels=[20, 25, 30, 35],
+                levels=[6, 6, 10, 20],
                 description="Maximum number of sides on any die",
                 field_name="max_dice_size",
             ),

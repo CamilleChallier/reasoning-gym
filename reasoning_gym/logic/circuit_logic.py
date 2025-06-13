@@ -416,7 +416,7 @@ class CircuitLogicCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="terms",
-                levels=[3, 5, 10, 20, 30],
+                levels=[(3,3), (3,5), (3,10), (3,20)],
                 description="Number of terms in the expression",
                 lower_field_name="min_terms",
                 upper_field_name="max_terms",
@@ -424,7 +424,7 @@ class CircuitLogicCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="inputs",
-                levels=[2, 4, 6, 8, 10],
+                levels=[(2,2), (2,4), (2,6), (2,8)],
                 description="Number of inputs per term",
                 lower_field_name="min_inputs",
                 upper_field_name="max_inputs",

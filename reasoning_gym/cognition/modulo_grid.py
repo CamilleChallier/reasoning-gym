@@ -23,8 +23,8 @@ class ModuloGridConfig:
 
     def validate(self) -> None:
         """Validate configuration parameters"""
-        assert self.size_x > 5, "size_x must be greater than 5"
-        assert self.size_y > 5, "size_y must be greater than 5"
+        assert self.size_x >= 2, "size_x must be greater than 2"
+        assert self.size_y >= 2, "size_y must be greater than 2"
         assert self.max_divisor > 0, "max_divisor must be greater than 0"
         assert self.max_target > 0, "max_target must be greater than 0"
         assert self.max_holes > 0, "max_holes must be greater than 0"
@@ -163,13 +163,13 @@ class ModuloGridCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="size_x",
                 field_name="size_x",
-                levels=[20, 30, 50, 75],
+                levels=[2, 5, 10, 20],
                 description="Size x",
             ),
             ScalarAttributeDefinition(
                 name="size_y",
                 field_name="size_y",
-                levels=[20, 30, 50, 75],
+                levels=[2, 5, 10, 20],
                 description="Size y",
             ),
             ScalarAttributeDefinition(
@@ -181,13 +181,13 @@ class ModuloGridCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="max_divisor",
                 field_name="max_divisor",
-                levels=[9, 10, 11, 48],
+                levels=[2, 5, 10, 20],
                 description="Max divisor",
             ),
             ScalarAttributeDefinition(
                 name="max_target",
                 field_name="max_target",
-                levels=[7, 14, 21, 49],
+                levels=[1, 3, 7, 14],
                 description="Max target",
             ),
         )

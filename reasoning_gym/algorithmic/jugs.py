@@ -332,7 +332,7 @@ class JugsCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="num_jugs",
                 field_name="num_jugs",
-                levels=[2, 4, 5, 7],
+                levels=[3, 4, 5, 7],
                 description="Number of jugs in the puzzle",
             ),
             ScalarAttributeDefinition(

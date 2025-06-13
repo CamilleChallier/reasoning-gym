@@ -12,7 +12,10 @@ from typing import Optional
 from ..coaching import BaseCurriculum, ScalarAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
-QUESTION_TEMPLATE = """Count how many prime numbers there are between {start} and {end} (inclusive) ?"""
+QUESTION_TEMPLATE = """A prime number is a number greater than 1 that has no positive divisors other than 1 and itself. \n
+Example: Primes between 10 and 20 are: 11, 13, 17, 19 → Total: 4\n
+Now your turn: Count how many prime numbers there are between {start} and {end} (inclusive)?
+"""
 
 DATASET_NAME = "count_primes"
 

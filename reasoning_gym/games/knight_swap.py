@@ -61,7 +61,7 @@ class KnightSwapConfig:
 
     def validate(self):
         """Validate configuration parameters"""
-        assert self.min_nodes >= 6, "min_nodes must be >= 6"
+        assert self.min_nodes >= 2, "min_nodes must be >= 2"
         assert self.max_nodes >= self.min_nodes, "max_nodes must be >= min_nodes"
         assert self.min_pieces >= 1, "min_pieces must be >= 1"
         assert self.max_pieces >= self.min_pieces, "max_pieces must be >= min_pieces"
@@ -409,21 +409,21 @@ class KnightSwapCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="nodes",
-                levels=[4, 6, 8, 10, 12],
+                levels=[(2,2), (2,6), (2,8), (2,10)],
                 description="Number of nodes (board size)",
                 lower_field_name="min_nodes",
                 upper_field_name="max_nodes",
             ),
             RangeAttributeDefinition(
                 name="pieces",
-                levels=[2, 3, 4, 5, 6],
+                levels=[(2,2), (2,3), (2,4), (2,5)],
                 description="Number of pieces per color",
                 lower_field_name="min_pieces",
                 upper_field_name="max_pieces",
             ),
             RangeAttributeDefinition(
                 name="steps",
-                levels=[1, 10, 20, 30],
+                levels=[(1,2), (1,10), (2,20), (5,30)],
                 description="Number of steps in the solution",
                 lower_field_name="min_steps",
                 upper_field_name="max_steps",

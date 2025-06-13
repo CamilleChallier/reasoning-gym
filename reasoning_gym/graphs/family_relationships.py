@@ -383,7 +383,7 @@ class FamilyRelationshipsCurriculum(BaseCurriculum):
             RangeAttributeDefinition(
                 name="family_size",
                 description="The size of the family",
-                levels=list(range(3, 12)),
+                levels=[(3,4),(3,7), (3,10), (3,20)],
                 lower_field_name="min_family_size",
                 upper_field_name="max_family_size",
             )

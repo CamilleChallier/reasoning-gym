@@ -307,7 +307,7 @@ class TsumegoCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="board_size",
-                levels=[5, 10, 15, 19],
+                levels=[(5,5), (5,10), (5,15), (5,19)],
                 lower_field_name="min_board_size",
                 upper_field_name="max_board_size",
                 description="The size of the board",

@@ -52,7 +52,7 @@ class HanoiConfig:
         """Validate configuration parameters."""
         assert self.min_disks >= 1, "min_disks must be at least 1"
         assert self.max_disks >= self.min_disks, "max_disks must be >= min_disks"
-        assert self.min_pegs >= 3, "min_pegs must be at least 3"
+        assert self.min_pegs >= 1, "min_pegs must be at least 1"
         assert self.max_pegs >= self.min_pegs, "max_pegs must be >= min_pegs"
 
 
@@ -452,14 +452,14 @@ class HanoiCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_disks",
-                levels=[3, 5, 10, 15],
+                levels=[(1,1), (1,5), (1,10), (1,15)],
                 lower_field_name="min_disks",
                 upper_field_name="max_disks",
                 description="Number of disks in the puzzle",
             ),
             RangeAttributeDefinition(
                 name="num_pegs",
-                levels=[3, 4, 5],
+                levels=[(1,2), (2,4), (2,6), (2,10)],
                 lower_field_name="min_pegs",
                 upper_field_name="max_pegs",
                 description="Number of pegs in the puzzle",

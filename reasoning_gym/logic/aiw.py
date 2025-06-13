@@ -223,13 +223,8 @@ class AliceInWonderlandCurriculum(BaseCurriculum):
                 description="The weight of the task type",
                 levels=[
                     [1.0, 0.0, 0.0],
-                    [0.9, 0.05, 0.05],
                     [0.7, 0.15, 0.15],
-                    [0.6, 0.2, 0.2],
-                    [0.5, 0.25, 0.25],
-                    [0.4, 0.3, 0.3],
-                    [0.3, 0.35, 0.35],
-                    [0.2, 0.4, 0.4],
+                    [0.35, 0.35, 0.3],
                     [0.1, 0.45, 0.45],
                 ],
             ),
@@ -237,7 +232,7 @@ class AliceInWonderlandCurriculum(BaseCurriculum):
                 name="num_entities",
                 field_name="max_entities",
                 description="The number of entities in the question",
-                levels=list(range(4, 18, 2)),
+                levels=[2,5,10,18],
             ),
         )
 

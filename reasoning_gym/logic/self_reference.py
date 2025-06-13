@@ -381,7 +381,7 @@ class SelfReferenceCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="difficulty",
                 field_name="difficulty",
-                levels=list(range(1, 11)),
+                levels=[1,2,4,8],
                 description="The difficulty of the puzzle",
             )
         )

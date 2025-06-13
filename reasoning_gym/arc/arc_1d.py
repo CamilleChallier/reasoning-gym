@@ -126,7 +126,7 @@ class Arc1DCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="size",
-                levels=[(5,5), (5,10), (5,50), (5,100)],
+                levels=[(8,8), (8,10), (8,50), (8,100)],
                 lower_field_name="min_size",
                 upper_field_name="max_size",
                 description="Grid size",

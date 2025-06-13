@@ -7,7 +7,7 @@ from typing import Optional
 from ..coaching import BaseCurriculum, RangeAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
-QUESTION_TEMPLATE = """How many 1 bits are there in the binary representation of the number {number}?"""
+QUESTION_TEMPLATE = """Example: "How many 1 bits are there in the binary representation of the number 1000?", Answer: "6". Now, how many 1 bits are there in the binary representation of the number {number}?"""
 
 DATASET_NAME = "count_bits"
 

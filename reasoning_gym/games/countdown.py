@@ -41,7 +41,7 @@ class CountdownConfig:
 
     def validate(self) -> None:
         """Validate configuration parameters"""
-        assert self.min_numbers > 1, "min_numbers must be greater than 1"
+        assert self.min_numbers >= 1, "min_numbers must be greater than 1"
         assert self.max_numbers >= self.min_numbers, "max_numbers must be >= min_numbers"
         assert self.min_value > 0, "min_value must be positive"
         assert self.max_value >= self.min_value, "max_value must be >= min_value"
@@ -213,7 +213,7 @@ class CountdownCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="numbers",
-                levels=[3, 6, 9, 12, 15],
+                levels=[(1,3), (1,6), (1,9), (1,12)],
                 description="Number of source numbers",
                 lower_field_name="min_numbers",
                 upper_field_name="max_numbers",
@@ -221,7 +221,7 @@ class CountdownCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="target",
-                levels=[100, 500, 1000, 5000, 10000],
+                levels=[(1,50), (1,100), (1,500), (1,1000)],
                 description="Target number to reach",
                 lower_field_name="min_target",
                 upper_field_name="max_target",
@@ -229,7 +229,7 @@ class CountdownCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="value",
-                levels=[1, 100, 200, 300],
+                levels=[(1,10), (1,100), (10,200), (100,500)],
                 description="Value of numbers",
                 lower_field_name="min_value",
                 upper_field_name="max_value",

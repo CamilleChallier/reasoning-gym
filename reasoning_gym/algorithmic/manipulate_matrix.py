@@ -10,11 +10,27 @@ import numpy as np
 from ..coaching import BaseCurriculum, RangeAttributeDefinition
 from ..factory import ProceduralDataset, register_dataset
 
-QUESTION_TEMPLATE = """For the following matrix:
-{matrix}
-
-Perform the following series of operations in order:
-- Identity transformation, i.e. no change
+QUESTION_TEMPLATE = """You will be given a matrix and asked to perform a series of transformations on it.\n
+Example:\n
+Matrix:\n
+1 2\n
+3 4\n
+\n
+Operations:\n
+- Identity transformation, i.e. no change\n
+- Horizontally mirror the matrix\n
+\n
+Result:\n
+3 4\n
+1 2\n
+\n
+Now try the following:\n
+\n
+Matrix:\n
+{matrix}\n
+\n
+Perform the following series of operations in order:\n
+- Identity transformation, i.e. no change\n
 {operations}
 """
 

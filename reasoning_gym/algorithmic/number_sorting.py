@@ -39,9 +39,13 @@ class NumberSortingDataset(ProceduralDataset):
     def __init__(self, config: NumberSortingConfig):
         super().__init__(config=config, seed=config.seed, size=config.size)
         self.added_instruction = """
-Please follow the instruction below:
-## 1. Let all your answers be a list of numbers. Instead of reporting your answer as -69, -13, 1, 7, 11, 43, 59, 61, use ['-69', '-13', '1', '7', '11', '43', '59', '61'] instead
-## 2. Convert all numbers in the square brackets as strings. For example, ['-69', '-13', '1', '7', '11', '43', '59', '61']
+Please follow the example below carefully:
+Example:
+Input:  -69, -13, 1, 7, 11, 43, 59, 61
+Output: "{\"answer\": ['-69', '-13', '1', '7', '11', '43', '59', '61']}\n
+
+Make sure your answer is a list of numbers as strings, enclosed in square brackets, 
+just like in the example above.
 """
 
     def _format_number(self, num: float, decimals: int) -> str:

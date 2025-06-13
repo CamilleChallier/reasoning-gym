@@ -150,13 +150,13 @@ class RottenOrangesCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="p_oranges",
                 field_name="p_oranges",
-                levels=[0.7, 0.8, 0.9, 0.95],
+                levels=[0.2, 0.5, 0.7, 0.9],
                 description="Probability of a cell containing an orange",
             ),
             ScalarAttributeDefinition(
                 name="p_rotten",
                 field_name="p_rotten",
-                levels=[0.05, 0.1, 0.2, 0.3],
+                levels=[0.3, 0.4, 0.5, 0.6],
                 description="Probability of an orange being rotten",
             ),
         )

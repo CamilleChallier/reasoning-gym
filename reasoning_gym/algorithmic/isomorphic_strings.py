@@ -131,7 +131,7 @@ class IsomorphicStringsCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="string_length",
-                levels=[(2,10), (2,50), (2,100), (2,1000)],
+                levels=[(3,10), (3,50), (3,100), (3,1000)],
                 description="Length of the strings",
                 lower_field_name="min_string_length",
                 upper_field_name="max_string_length",
@@ -139,7 +139,7 @@ class IsomorphicStringsCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="p_solvable",
                 field_name="p_solvable",
-                levels=[1, 0.6, 0.5, 0.4],
+                levels=[0.8, 0.6, 0.5, 0.4],
                 description="Probability of generating a solvable sample",
             ),
         )

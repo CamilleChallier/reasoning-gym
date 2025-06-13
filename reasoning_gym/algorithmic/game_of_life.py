@@ -166,13 +166,13 @@ class GameOfLifeCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="grid_size_x",
                 field_name="grid_size_x",
-                levels=[5, 10, 100, 500],
+                levels=[2, 5, 10, 50],
                 description="Grid size in the x direction",
             ),
             ScalarAttributeDefinition(
                 name="grid_size_y",
                 field_name="grid_size_y",
-                levels=[5, 10, 100, 500],
+                levels=[2, 5, 10, 50],
                 description="Grid size in the y direction",
             ),
             # Filled cells should be 10%, 20%, 30%, 50% of the grid_size_x * grid_size_y

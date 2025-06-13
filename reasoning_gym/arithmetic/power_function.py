@@ -94,9 +94,15 @@ class PowerFunctionCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="exponent",
-                levels=[2, 4, 6, 10],
+                levels=[(0, 2), (0,4), (0,6), (0,10)],
                 lower_field_name="min_exponent",
                 upper_field_name="max_exponent",
+            ),
+            RangeAttributeDefinition(
+                name="base",
+                levels=[(0, 10), (-100, 100), (-500, 500), (-1e3, 1e3)],
+                lower_field_name="min_base",
+                upper_field_name="max_base",
             ),
         )
 

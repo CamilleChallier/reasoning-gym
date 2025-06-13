@@ -129,7 +129,7 @@ class BaseConversionCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="base",
-                levels=[2, 9, 18, 27, 36],
+                levels=[(2,2), (2,9), (2,18), (2,27), (2,36)],
                 description="The base of the number system",
                 lower_field_name="min_base",
                 upper_field_name="max_base",
@@ -137,7 +137,7 @@ class BaseConversionCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="value",
-                levels=[1_000, 10_000, 100_000, 1_000_000],
+                levels=[(1, 100), (1, 1000), (1, 10_000), (1, 100_000)],
                 description="The value to convert",
                 lower_field_name="min_value",
                 upper_field_name="max_value",

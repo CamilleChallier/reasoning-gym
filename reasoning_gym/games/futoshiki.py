@@ -25,7 +25,7 @@ class FutoshikiConfig:
 
     def validate(self):
         """Validate configuration parameters"""
-        assert 4 <= self.min_board_size <= self.max_board_size, "board_size must be between 4 and 9"
+        assert 2 <= self.min_board_size <= self.max_board_size, "board_size must be between 2 and 9"
         assert 0 <= self.min_difficulty <= self.max_difficulty, "difficulty must be between 0 and 3"
 
 
@@ -675,7 +675,7 @@ class FutoshikiCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="board_size",
-                levels=[4, 6, 7, 9],
+                levels=[(2,4), (2,6), (2,7), (2,9)],
                 description="Board size",
                 lower_field_name="min_board_size",
                 upper_field_name="max_board_size",

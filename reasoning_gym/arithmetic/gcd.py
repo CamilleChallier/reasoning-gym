@@ -61,7 +61,7 @@ class GCDDataset(ProceduralDataset):
         numbers_str = ", ".join(str(n) for n in numbers)
 
         return {
-            "question": f"Find the Greatest Common Divisor (GCD) of these numbers: {numbers_str}. Give only the GCD as your final answer.",
+            "question": f"The Greatest Common Divisor (GCD) of two or more numbers is the largest number that divides all of them without a remainder. Find the GCD of these numbers: {numbers_str}. If they have no common divisors other than 1, then the answer is 1.  Give only the GCD as your final answer.",
             "answer": str(result),
             "metadata": {
                 "source_dataset": DATASET_NAME,
@@ -85,14 +85,14 @@ class GCDCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_terms",
-                levels=[2, 3, 4, 5],
+                levels=[(2,2), (2,3), (2,4), (2,5)],
                 description="number of terms",
                 lower_field_name="min_numbers",
                 upper_field_name="max_numbers",
             ),
             RangeAttributeDefinition(
                 name="value",
-                levels=[100, 1000, 10000, 100000],
+                levels=[(1,50), (1,100), (1,1000), (1,10_000)],
                 description="maximum value",
                 lower_field_name="min_value",
                 upper_field_name="max_value",

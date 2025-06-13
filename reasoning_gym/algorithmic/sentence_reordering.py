@@ -90,7 +90,7 @@ class SentenceReorderingDataset(ProceduralDataset):
         word_count = len(re.findall(r"\b\w+\b", solved_sentence))
 
         return {
-            "question": f"Restore the correct order of words in the following sentence: {question}",
+            "question": f"Restore the correct order of words in the following sentence: {question} Be careful to keep the punctuation.",
             "answer": solved_sentence,
             "metadata": {
                 "source_dataset": DATASET_NAME,

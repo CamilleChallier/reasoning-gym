@@ -141,7 +141,7 @@ class MahjongPuzzleCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_rounds",
-                levels=[10, 50, 100, 500],
+                levels=[(1,3), (2,10), (2,20), (10,40)],
                 description="Number of rounds in the game",
                 lower_field_name="min_num_rounds",
                 upper_field_name="max_num_rounds",

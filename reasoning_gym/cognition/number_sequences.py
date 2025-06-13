@@ -193,9 +193,15 @@ class NumberSequenceDataset(ProceduralDataset):
             sequence = [i * 2 for i in range(num_terms + 1)]
 
         visible_terms = sequence[:-1]  # Last term is the answer
+        
+        prompt = ("You are given a number sequence that follows a hidden mathematical pattern. "
+    "This pattern could involve addition, multiplication, doubling, halving, or using previous values. "
+    "Your task is to find the logic behind the pattern and predict the next number. Output only the next number.\n\n"
+    "Sequence:\n"
+            )
 
         return {
-            "question": ", ".join(map(str, visible_terms)) + ", ?",
+            "question": prompt + ", ".join(map(str, visible_terms)) + ", ?",
             "answer": str(sequence[-1]),
             "metadata": {
                 "source_dataset": DATASET_NAME,

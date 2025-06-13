@@ -252,7 +252,7 @@ class MiniSudokuCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="empty",
-                levels=[4, 6, 8, 10, 12],
+                levels=[(1,2), (1,4), (2,6), (4,10)],
                 description="Number of empty cells in the puzzle",
                 lower_field_name="min_empty",
                 upper_field_name="max_empty",

@@ -63,7 +63,8 @@ class LCMDataset(ProceduralDataset):
         numbers_str = ", ".join(str(n) for n in numbers)
 
         return {
-            "question": f"Find the Least Common Multiple (LCM) of these numbers: {numbers_str}",
+            "question": f"The Least Common Multiple (LCM) of two or more numbers is the smallest number that is a multiple of all of them. "
+                        f"Find the LCM of these numbers: {numbers_str}.",
             "answer": str(result),
             "metadata": {
                 "source_dataset": DATASET_NAME,
@@ -86,14 +87,14 @@ class LCMCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="numbers",
-                levels=[2, 4, 6, 8, 10],
+                levels=[(2,2), (2,3), (2,4), (2,5)],
                 description="Number of integers to find LCM of",
                 lower_field_name="min_numbers",
                 upper_field_name="max_numbers",
             ),
             RangeAttributeDefinition(
                 name="value",
-                levels=[1, 100, 500, 1000, 5000],
+                levels=[(1,50), (1,100), (1,1000), (1,10_000)],
                 description="Range of values for each integer",
                 lower_field_name="min_value",
                 upper_field_name="max_value",

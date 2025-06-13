@@ -241,7 +241,7 @@ class FigletFontCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="word_len",
-                levels=[3, 5, 10, 15, 20, 30],
+                levels=[(2,3), (2,5), (2,10), (2,15)],
                 default_level=0,
                 description="The length of the word to be displayed",
                 lower_field_name="min_word_len",

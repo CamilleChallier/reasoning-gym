@@ -126,4 +126,7 @@ class ReseedingDataset(Iterable[dict[str, Any]]):
 
     def score_answer(self, answer: Optional[str], entry: dict[str, Any]) -> float:
         """Forward scoring to the wrapped dataset's implementation"""
-        return self.dataset.score_answer(answer, entry)
+        import json
+        parsed_response = json.loads(answer)
+        move_string = parsed_response["answer"]
+        return self.dataset.score_answer(move_string, entry)

@@ -170,7 +170,7 @@ class FractionSimplificationCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="value",
-                levels=[1, 100, 1000, 10000],
+                levels=[(1,10),(1,100), (1,1000), (1,10_000)],
                 description="Value range for numerator and denominator",
                 lower_field_name="min_value",
                 upper_field_name="max_value",
@@ -178,7 +178,7 @@ class FractionSimplificationCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="factor",
-                levels=[1, 10, 100, 1000],
+                levels=[1, 10, 100, 100, 1000],
                 description="Factor range for generating unsimplified fractions",
                 lower_field_name="min_factor",
                 upper_field_name="max_factor",

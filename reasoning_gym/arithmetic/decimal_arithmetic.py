@@ -14,7 +14,7 @@ DATASET_NAME = "decimal_arithmetic"
 class DecimalArithmeticConfig:
     """Configuration for decimal arithmetic dataset generation"""
 
-    min_num_decimal_places: int = 3
+    min_num_decimal_places: int = 2
     max_num_decimal_places: int = 3
     min_terms: int = 2
     max_terms: int = 6
@@ -237,7 +237,7 @@ class DecimalArithmeticCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="decimal_places",
-                levels=[3, 5, 8, 10],
+                levels=[2, 5, 8, 10],
                 description="Number of decimal places of the numbers in problem",
                 lower_field_name="min_num_decimal_places",
                 upper_field_name="max_num_decimal_places",

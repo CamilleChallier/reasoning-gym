@@ -221,7 +221,7 @@ class ColorCubeRotationCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="rotations",
-                levels=[1, 5, 10, 50, 100],
+                levels=[(1,1), (2,5), (2,10), (5,20)],
                 description="Number of rotations to perform on the cube",
                 lower_field_name="min_rotations",
                 upper_field_name="max_rotations",

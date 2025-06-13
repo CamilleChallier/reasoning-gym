@@ -14,6 +14,8 @@ If there are multiple possible answers, only respond with one of them. You must 
 
 Your output should be a single string, with no spaces or punctuation.
 
+Example: Input: n, n, w Output: nwn
+
 Now, form a valid palindrome using the following letters: {letters}
 """
 

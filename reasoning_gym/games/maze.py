@@ -201,7 +201,7 @@ class MazeCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="dist",
-                levels=[5, 10, 15, 20],
+                levels=[(1,3), (1,10), (2,15), (2,20)],
                 description="Distance from start to goal",
                 lower_field_name="min_dist",
                 upper_field_name="max_dist",
@@ -209,7 +209,7 @@ class MazeCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="grid_size",
-                levels=[10, 25, 50, 100],
+                levels=[(2,3), (2,10), (2,25), (10,50)],
                 description="Size of the square grid",
                 lower_field_name="min_grid_size",
                 upper_field_name="max_grid_size",

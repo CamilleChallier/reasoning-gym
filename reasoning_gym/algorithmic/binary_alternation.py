@@ -129,7 +129,7 @@ class BinaryAlternationCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="n",
-                levels=[(5, 5), (5, 10), (5, 50), (5, 100)],
+                levels=[(3, 5), (5, 10), (5, 50), (5, 100)],
                 description="Number of bits in the binary string",
                 lower_field_name="min_n",
                 upper_field_name="max_n",

@@ -168,12 +168,12 @@ class NQueensCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="n",
                 field_name="n",
-                levels=[4, 6, 8, 10, 12],
+                levels=[4, 4, 6, 8, 10],
                 description="Board size",
             ),
             RangeAttributeDefinition(
                 name="num_removed",
-                levels=[2, 4, 6, 8, 10],
+                levels=[(1,2), (1,4), (1,6), (1,8)],
                 description="Number of queens to remove",
                 lower_field_name="min_remove",
                 upper_field_name="max_remove",

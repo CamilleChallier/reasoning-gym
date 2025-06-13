@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from random import Random
 from typing import Any, Optional
 
-import bfi
-
 from ..coaching import BaseCurriculum, ScalarAttributeDefinition
 from ..data.wordle_words import wordle_words
 from ..factory import ProceduralDataset, register_dataset
 from .contrib.bfit.Compiler import Compiler, Minify
+
+import bfi
 
 DATASET_NAME = "bf"
 
@@ -18,22 +18,35 @@ class BFConfig:
 
     seed: Optional[int] = None
     size: int = 500
-    difficulty: int = 1
+    difficulty: int = 0
 
     def validate(self) -> None:
         """Validate configuration parameters"""
-        assert self.difficulty > 0, "difficulty must be greater than 0"
-        assert self.difficulty < 4, "difficulty must be less than 4"
+        assert 0<= self.difficulty < 4, "difficulty must be less than 4"
 
 
 class BFDataset(ProceduralDataset):
     """Generates BF tasks"""
 
     def __init__(self, config: BFConfig):
-        self._prompt_templates = [
-            "This is a BF (Brainf*ck) computer program. What is the output?\n\n{bf_program}\n\nRespond only with the exact output of the program.",
-            "Consider the following BF (Brainf*ck) code. What would it output?\n\n{bf_program}\n\nProvide only the exact output of the code.",
-        ]
+        self._prompt_templates = ( "This is a Brainf*ck (BF) program. BF is a minimalistic language with only 8 commands:\n\n"
+                                    "> : Move the pointer one cell to the right\n"
+                                    "< : Move the pointer one cell to the left\n"
+                                    "+ : Increment the current cell by 1\n"
+                                    "- : Decrement the current cell by 1\n"
+                                    "[ : Jump forward to the matching ] if the current cell is 0\n"
+                                    "] : Jump back to the matching [ if the current cell is not 0\n"
+                                    ". : Output the ASCII character at the current cell\n"
+                                    ", : Read a single character of input into the current cell\n\n"
+                                    "Here is an example:\n"
+                                    "BF code: `++++++++[>++++++++<-]>+.`\n"
+                                    "This builds the number 65 (ASCII \"A\") and prints it.\n"
+                                    "Output: `A`\n\n"
+                                    "Now, what is the output of the following BF program?\n\n"
+                                    "{bf_program}\n\n"
+                                    "Respond only with the exact output of the program."
+                                )
+
         super().__init__(config=config, seed=config.seed, size=config.size)
 
     def __getitem__(self, idx: int) -> dict:
@@ -52,7 +65,7 @@ class BFDataset(ProceduralDataset):
         result = bfi.interpret(bf_program, buffer_output=True)
 
         return {
-            "question": rng.choice(self._prompt_templates).format(bf_program=bf_program),
+            "question": self._prompt_templates.format(bf_program=bf_program),
             "answer": result,
             "metadata": {
                 "source_dataset": DATASET_NAME,
@@ -64,8 +77,17 @@ class BFDataset(ProceduralDataset):
         }
 
     def generate_bfit_code(self, difficulty, rng: Random) -> str:
+        
+        if difficulty == 0:
+            # Output a single letter
+            letter = rng.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            bfit_template = f"""
+    int main() {{
+        print("{letter}");
+    }}
+    """
 
-        if difficulty == 1:
+        elif difficulty == 1:
             word = rng.choice(wordle_words)
             bfit_template = f"""
 int main() {{
@@ -157,7 +179,7 @@ class BFCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="difficulty",
                 field_name="difficulty",
-                levels=[1, 2, 3],
+                levels=[0, 1, 2, 3],
                 description="Difficulty level",
             )
         )

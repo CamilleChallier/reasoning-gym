@@ -89,6 +89,8 @@ class NumberFilteringDataset(ProceduralDataset):
         return {
             "question": (
                 f"{keep_remove.capitalize()} all numbers {larger_smaller} than {filter_str} "
+                f'Example: \n Input list: ["1.00"," 2.50", "3.75", "4.00"] \n'
+                f"Keep all numbers larger than 3.00, the output should be {'answer': '['3.75', '4.00']'}\n"
                 f"in this list: {str_numbers}\nReturn the new list in the same format."
             ),
             "answer": str(result_strs) if result_strs else "[]",

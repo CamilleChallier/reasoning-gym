@@ -30,7 +30,7 @@ class CryptarithmConfig:
     allow_leading_zero: bool = False
     seed: Optional[int] = None
     size: int = 500  # Number of puzzle instances to generate
-    max_unique_digits: int = 6 # Maximum number of unique digits (letters) in the puzzle
+    # max_unique_digits: int = 6 # Maximum number of unique digits (letters) in the puzzle
 
     def validate(self):
         """Validate configuration parameters."""
@@ -95,7 +95,7 @@ class CryptarithmDataset(ProceduralDataset):
         # If we exceed 10 distinct digits, try again (pick new random numbers).
         # In practice, we can loop until success. But for demonstration, let's do a simple re-pick approach.
         # We'll do a while loop up to some attempts:
-        if len(digits_in_use) > self.config.max_unique_digits:
+        if len(digits_in_use) > self.config.max_words:
             # Just do a recursion call to pick new numbers, ignoring current picks
             return self._create_single_puzzle(rng)
 
@@ -193,6 +193,7 @@ class CryptarithmDataset(ProceduralDataset):
                 "letter_to_digit": letter_to_digit,
                 "difficulty": {
                     "words": (self.config.min_words, self.config.max_words),
+                    # "max_unique_digits": self.config.max_unique_digits,
                 },
             },
         }
@@ -262,12 +263,12 @@ class CryptarithmCurriculum(BaseCurriculum):
                 upper_field_name="max_words",
                 ensure_interval=True,
             ),
-            ScalarAttributeDefinition(
-                name="max_unique_digits",
-                field_name="max_unique_digits",
-                levels=[2, 5, 8, 10],
-                description="Maximum number of unique digits (letters) used in each puzzle",
-            ),
+            # ScalarAttributeDefinition(
+            #     name="max_unique_digits",
+            #     field_name="max_unique_digits",
+            #     levels=[2, 5, 8, 10],
+            #     description="Maximum number of unique digits (letters) used in each puzzle",
+            # ),
         )
 
 

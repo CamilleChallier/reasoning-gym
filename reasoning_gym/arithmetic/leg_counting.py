@@ -56,7 +56,7 @@ ANIMALS = {
 }
 
 QUESTION_TEMPLATE = """Your task is to count how many legs there are in total when given a list of animals.
-
+Remember, different animals can have a different number of legs, so pay close attention to each type.
 Now, how many legs are there in total if you have {animals}?
 """
 

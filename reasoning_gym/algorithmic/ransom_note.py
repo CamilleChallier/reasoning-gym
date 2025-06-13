@@ -126,25 +126,25 @@ class RansomNoteCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="min_note_length",
                 field_name="min_note_length",
-                levels=[1, 5, 20, 100],  # easier to harder min note length
+                levels=[2, 10, 10, 10],  # easier to harder min note length
                 description="Minimum length of the ransom note",
             ),
             ScalarAttributeDefinition(
                 name="max_note_length",
                 field_name="max_note_length",
-                levels=[5, 20, 500, 1000],  # easy to harder max note length
+                levels=[2, 20, 50, 100],  # easy to harder max note length
                 description="Maximum length of the ransom note",
             ),
             ScalarAttributeDefinition(
                 name="min_magazine_length",
                 field_name="min_magazine_length",
-                levels=[2, 10, 50, 100],  # easier to harder min magazine length
+                levels=[5, 10, 10, 10],  # easier to harder min magazine length
                 description="Minimum length of the magazine",
             ),
             ScalarAttributeDefinition(
                 name="max_magazine_length",
                 field_name="max_magazine_length",
-                levels=[10, 50, 500, 1000],  # easy to harder max magazine length
+                levels=[10, 50, 150, 300],  # easy to harder max magazine length
                 description="Maximum length of the magazine",
             ),
             ScalarAttributeDefinition(

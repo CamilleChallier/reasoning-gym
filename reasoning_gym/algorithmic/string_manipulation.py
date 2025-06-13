@@ -43,7 +43,7 @@ class StringManipulationConfig:
         """Validate configuration parameters"""
         assert 5 <= self.min_string_length, "Minimum string length should be at least 5"
         assert self.min_string_length <= self.max_string_length, "Minimum string length should be less than maximum"
-        assert 3 <= self.min_num_rules, "Minimum number of rules should be at least 3"
+        assert 1 <= self.min_num_rules, "Minimum number of rules should be at least 1"
         assert self.min_num_rules <= self.max_num_rules, "Minimum number of rules should be less than maximum"
         assert self.max_num_rules <= 20, "Maximum number of rules should be at most 20"
 
@@ -170,7 +170,7 @@ class StringManipulationDataset(ProceduralDataset):
         string_length = rng.randint(self.config.min_string_length, self.config.max_string_length)
         string = "".join(rng.choice(self.vocabulary) for _ in range(string_length))
 
-        num_rules = rng.randint(self.config.min_num_rules, self.config.max_num_rules)
+        num_rules = rng.randint(self.config.min_num_rules-2, self.config.max_num_rules)
         selected_rules = rng.sample(self.rules, num_rules)
         rules_str = "\n".join(f"{i+1}. {rule}" for i, (rule, _) in enumerate(selected_rules))
 
@@ -212,7 +212,7 @@ class StringManipulationCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="num_rules",
-                levels=[(1,2), (1,5), (1,10), (1,20)],
+                levels=[(3,3), (3,5), (3,10), (3,20)],
                 description="Number of rules to apply",
                 lower_field_name="min_num_rules",
                 upper_field_name="max_num_rules",

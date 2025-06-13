@@ -23,7 +23,7 @@ class NumberFormatConfig:
 
     min_num_candidates: int = 2  # Minimum number of candidates
     max_num_candidates: int = 5  # Maximum number of candidates
-    min_n: float = 1_000  # Lower bound for the numbers
+    min_n: float = 1  # Lower bound for the numbers
     max_n: float = 1_000_000_000  # Upper bound for the numbers
     max_delta: float = 10.0
 
@@ -119,7 +119,7 @@ class NumberFormatCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_candidates",
-                levels=[5, 25, 100, 500],
+                levels=[(2,5), (2,20), (5,50), (5,100)],
                 description="Number of candidates",
                 lower_field_name="min_num_candidates",
                 upper_field_name="max_num_candidates",
@@ -127,11 +127,11 @@ class NumberFormatCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="n",
-                levels=[10, 1_000, 1_000_000, 1_000_000_000],
-                description="Magnitude of the values",
                 lower_field_name="min_n",
                 upper_field_name="max_n",
                 ensure_interval=True,
+                levels=[(1,10), (1,1_000), (1,1_000_000), (1,1_000_000_000)],
+                description="Magnitude of the values",
             ),
             ScalarAttributeDefinition(
                 name="max_delta",
