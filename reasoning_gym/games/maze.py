@@ -33,7 +33,7 @@ class MazeConfig:
         """Validate configuration parameters."""
         assert self.min_dist >= 1, "min_dist must be >= 1"
         assert self.max_dist >= self.min_dist, "max_dist must be >= min_dist"
-        assert self.min_grid_size >= 2, "min_grid_size must be >= 2"
+        assert self.min_grid_size >= 3, "min_grid_size must be >= 2"
         assert self.max_grid_size >= self.min_grid_size, "max_grid_size must be >= min_grid_size"
 
 
@@ -70,21 +70,22 @@ class MazeDataset(ProceduralDataset):
         rng = random.Random(self.seed + idx)
         # Characters to use in the maze
         self.wall_char, self.path_char, self.start_char, self.goal_char = self._get_random_chars(rng, n=4)
+        
 
         for _attempt in range(self.num_retries):
             # Choose random grid size and build a random maze
             size = rng.randint(self.config.min_grid_size, self.config.max_grid_size)
             maze_grid = self._generate_random_maze(rng, size)
-
-            # Place Start (S) and Goal (G) off the border
-            start_r, start_c = self._random_floor_cell(rng, maze_grid)
-            maze_grid[start_r][start_c] = self.start_char
-
-            goal_r, goal_c = self._random_floor_cell(rng, maze_grid)
-            # Ensure it's not the same as Start
-            while (goal_r, goal_c) == (start_r, start_c):
+            
+            try:
+                start_r, start_c = self._random_floor_cell(rng, maze_grid)
+                maze_grid[start_r][start_c] = self.start_char
                 goal_r, goal_c = self._random_floor_cell(rng, maze_grid)
-            maze_grid[goal_r][goal_c] = self.goal_char
+                while (goal_r, goal_c) == (start_r, start_c):
+                    goal_r, goal_c = self._random_floor_cell(rng, maze_grid)
+                maze_grid[goal_r][goal_c] = self.goal_char
+            except RuntimeError:
+                continue  # Try a new maze
 
             # Compute BFS shortest path
             dist = self._bfs_shortest_path(maze_grid, start_r, start_c, goal_r, goal_c)
@@ -148,15 +149,16 @@ class MazeDataset(ProceduralDataset):
                     grid[r][c] = self.wall_char
 
         return grid
-
-    def _random_floor_cell(self, rng: random.Random, grid: list[list[str]]) -> tuple[int, int]:
-        """Pick a random path cell inside the maze (not the border)."""
+            
+    def _random_floor_cell(self, rng: random.Random, grid: list[list[str]], max_attempts=1000) -> tuple[int, int]:
+        """Pick a random path cell inside the maze (not the border). Raises RuntimeError if none found."""
         size = len(grid)
-        while True:
+        for _ in range(max_attempts):
             r = rng.randint(1, size - 2)
             c = rng.randint(1, size - 2)
             if grid[r][c] == self.path_char:
                 return (r, c)
+        raise RuntimeError("Could not find a path cell in the maze grid.")
 
     def _bfs_shortest_path(
         self, grid: list[list[str]], start_r: int, start_c: int, goal_r: int, goal_c: int
@@ -201,7 +203,7 @@ class MazeCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="dist",
-                levels=[(1,3), (1,10), (2,15), (2,20)],
+                levels=[(5,5), (5,10), (5,15), (5,20)],
                 description="Distance from start to goal",
                 lower_field_name="min_dist",
                 upper_field_name="max_dist",
@@ -209,7 +211,7 @@ class MazeCurriculum(BaseCurriculum):
             ),
             RangeAttributeDefinition(
                 name="grid_size",
-                levels=[(2,3), (2,10), (2,25), (10,50)],
+                levels=[(5,5), (5,10), (5,25), (10,50)],
                 description="Size of the square grid",
                 lower_field_name="min_grid_size",
                 upper_field_name="max_grid_size",

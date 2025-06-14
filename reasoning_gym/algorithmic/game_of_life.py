@@ -18,15 +18,19 @@ class GameOfLifeConfig:
     grid_size_x: int = 10
     grid_size_y: int = 10
     filled_cells_weights: float = 0.1
-    filled_cells: int = int(filled_cells_weights * grid_size_x * grid_size_y)  # actually a max
+    filled_cells: Optional[int] = None
     simulation_steps: int = 1
     seed: Optional[int] = None
     size: int = 500
+    
+    def __post_init__(self):
+        if self.filled_cells is None:
+            self.filled_cells = int(self.filled_cells_weights * self.grid_size_x * self.grid_size_y)
 
     def validate(self):
         """Validate configuration parameters"""
-        assert 3 <= self.grid_size_x <= 999, "grid_size_x must be between 0 and 999"
-        assert 3 <= self.grid_size_y <= 999, "grid_size_y must be between 0 and 999"
+        assert 2 <= self.grid_size_x <= 999, "grid_size_x must be between 2 and 999"
+        assert 2 <= self.grid_size_y <= 999, "grid_size_y must be between 2 and 999"
         assert self.simulation_steps >= 0, "simulation_steps must be gte 0"
         assert self.filled_cells <= self.grid_size_x * self.grid_size_y, "filled_cells must fit in x times y"
 

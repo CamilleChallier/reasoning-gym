@@ -409,27 +409,28 @@ class KnightSwapCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="nodes",
-                levels=[(2,2), (2,6), (2,8), (2,10)],
+                levels=[(4, 4), (6, 6), (8, 8), (10, 10)],
                 description="Number of nodes (board size)",
                 lower_field_name="min_nodes",
                 upper_field_name="max_nodes",
             ),
             RangeAttributeDefinition(
                 name="pieces",
-                levels=[(2,2), (2,3), (2,4), (2,5)],
+                levels=[(2, 2), (2, 3), (3, 4), (3, 5)],
                 description="Number of pieces per color",
                 lower_field_name="min_pieces",
                 upper_field_name="max_pieces",
             ),
             RangeAttributeDefinition(
                 name="steps",
-                levels=[(1,2), (1,10), (2,20), (5,30)],
+                levels=[(2, 5), (4, 10), (6, 20), (10, 30)],
                 description="Number of steps in the solution",
                 lower_field_name="min_steps",
                 upper_field_name="max_steps",
                 ensure_interval=True,
             ),
         )
+
 
 
 register_dataset(DATASET_NAME, KnightSwapDataset, KnightSwapConfig, KnightSwapCurriculum)

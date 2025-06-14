@@ -95,9 +95,9 @@ class CryptarithmDataset(ProceduralDataset):
         # If we exceed 10 distinct digits, try again (pick new random numbers).
         # In practice, we can loop until success. But for demonstration, let's do a simple re-pick approach.
         # We'll do a while loop up to some attempts:
-        if len(digits_in_use) > self.config.max_words:
+        if len(digits_in_use) > 10:
             # Just do a recursion call to pick new numbers, ignoring current picks
-            return self._create_single_puzzle(rng)
+            return self._create_single_puzzle(rng, idx)
 
         # 5) Map each digit to a letter
         #    If no leading zero is allowed, the leading digit of each addend + result must not map to '0'.
@@ -127,10 +127,10 @@ class CryptarithmDataset(ProceduralDataset):
                 first_digit = str(wn)[0]
                 if digit_to_letter.get(first_digit) == zero_letter:
                     # Conflict => re-generate puzzle
-                    return self._create_single_puzzle(rng)
+                    return self._create_single_puzzle(rng, idx)
             sum_first_digit = str(total_sum)[0]
             if digit_to_letter.get(sum_first_digit) == zero_letter:
-                return self._create_single_puzzle(rng)
+                return self._create_single_puzzle(rng, idx)
 
         # Now we have a stable digit->letter mapping. Let's create the letter->digit mapping for the answer.
         letter_to_digit = {v: int(k) for k, v in digit_to_letter.items()}

@@ -181,14 +181,14 @@ class ShortestPathCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="rows",
-                levels=[(1,3), (1,5), (1,10), (1,20)],
+                levels=[(1,10), (1,15), (1,20), (1,25)],
                 description="Number of rows in the grid",
                 lower_field_name="min_rows",
                 upper_field_name="max_rows",
             ),
             RangeAttributeDefinition(
                 name="cols",
-                levels=[(1,3), (1,5), (1,10), (1,20)],
+                levels=[(1,10), (1,15), (1,20), (1,25)],
                 description="Number of columns in the grid",
                 lower_field_name="min_cols",
                 upper_field_name="max_cols",

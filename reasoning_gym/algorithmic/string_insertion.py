@@ -40,7 +40,7 @@ class StringInsertionConfig:
 
     def validate(self):
         """Validate configuration parameters"""
-        assert 5 <= self.min_string_length, "Minimum string length should be at least 5"
+        assert 2 <= self.min_string_length, "Minimum string length should be at least 5"
         assert self.min_string_length <= self.max_string_length, "Minimum string length should be less than maximum"
 
 

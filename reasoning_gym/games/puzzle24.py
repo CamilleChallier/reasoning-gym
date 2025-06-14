@@ -141,7 +141,7 @@ class Puzzle24Curriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="value",
-                levels=[(1,2), (1,4), (2,7), (2,10)],
+                levels=[(2,7), (2,7), (2,7), (2,10)],
                 description="Value of the numbers used in the expression",
                 lower_field_name="min_value",
                 upper_field_name="max_value",
@@ -152,7 +152,7 @@ class Puzzle24Curriculum(BaseCurriculum):
                 description="Set of allowed arithmetic operators",
                 field_name="operators",
                 levels=[
-                    ("+"),
+                    ("+",),
                     ("+", "-"),
                     ("+", "-", "*"),
                     ("+", "-", "*", "/"),
