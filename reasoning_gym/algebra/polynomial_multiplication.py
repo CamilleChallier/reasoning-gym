@@ -203,7 +203,7 @@ class PolynomialMultiplicationCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="max_value",
                 field_name="max_value",
-                levels=[100, 10000, 1000000, 100000000],
+                levels=[100, 10000, 10000, 10000],
                 description="Maximum value for coefficients",
             ),
             ScalarAttributeDefinition(

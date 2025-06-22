@@ -136,7 +136,7 @@ class NumberFormatCurriculum(BaseCurriculum):
             ScalarAttributeDefinition(
                 name="max_delta",
                 field_name="max_delta",
-                levels=[1e1, 1e0, 1e-3, 1e-6],
+                levels=[1e-6, 1e-3, 1e0, 1e6],
                 description="Max delta",
             ),
         )

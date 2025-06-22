@@ -147,7 +147,7 @@ class NeedleHaystackCurriculum(BaseCurriculum):
         self._define_attributes(
             RangeAttributeDefinition(
                 name="num_statements",
-                levels=[(2,5), (2,10), (10,30), (10,70)],
+                levels=[(2,5), (2,20), (10,50), (50,150)],
                 description="Number of statements in the haystack",
                 lower_field_name="min_num_statements",
                 upper_field_name="max_num_statements",
