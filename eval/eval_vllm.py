@@ -161,7 +161,9 @@ class AsyncModelEvaluator:
                         params["top_p"] = self.config.top_p
                         
                     parameters = SamplingParams(**params)
+                    # print("Before chat \n")
                     completion = self.client.chat(conversation, parameters)
+                    # print("After chat \n")
                     # prompt_str = f"{self.config.get_system_prompt()}\nUser: {prompt} Answer by <answer>INSERT ANSWER</answer>:"
                     # completion = self.client.generate(prompt_str, parameters)
                     response = completion[0].outputs[0].text
@@ -192,7 +194,8 @@ class AsyncModelEvaluator:
             Dict with processing results
         """
         response = None
-        # print("response:", await self.get_model_response(entry["question"]), "\n*****\n")
+        import sys
+        sys.stdout.flush()
         try:
             # Get model response first
             response = await self.get_model_response(entry["question"], apertus=apertus)
@@ -223,10 +226,7 @@ class AsyncModelEvaluator:
                     # Try to extract the "answer" field
                     answer = parsed.get("answer") if isinstance(parsed, dict) else None
 
-                    if isinstance(answer, str):
-                        model_answer = answer.strip()
-                    else:
-                        model_answer = answer
+                    model_answer = answer.strip() if isinstance(answer, str) else str(answer)
                 else : 
                     model_answer = extract_answer(response)
                 
