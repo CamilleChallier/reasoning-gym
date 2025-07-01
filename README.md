@@ -26,39 +26,24 @@ _Note that this project is currently under active development, and the version p
 
 For development setup, see [CONTRIBUTING.md](CONTRIBUTING.md#development-setup).
 
-## ✨ Example Usage
+## 🛠️ Modifications in This Fork
 
-```python
-import reasoning_gym
-data = reasoning_gym.create_dataset('leg_counting', size=10, seed=42)
-for i, x in enumerate(data):
-    print(f'{i}: q="{x['question']}", a="{x['answer']}"')
-    print('metadata:', x['metadata'])
-    # use the dataset's `score_answer` method for algorithmic verification
-    assert data.score_answer(answer=x['answer'], entry=x) == 1.0
-```
+This fork introduces custom evaluation utilities, updated reasoning tasks, and tools for retrieval-augmented workflows and visualization.
 
-Output:
+### 🔍 `reasoning_gym/`
+- **Curriculum Customization**: Modified reasoning curriculum levels to explore and benchmark new task difficulties or capabilities.
 
-```
-0: q="How many legs are there in total if you have 1 sea slug, 1 deer?", a="4"
-metadata: {'animals': {'sea slug': 1, 'deer': 1}, 'total_legs': 4}
-1: q="How many legs are there in total if you have 2 sheeps, 2 dogs?", a="16"
-metadata: {'animals': {'sheep': 2, 'dog': 2}, 'total_legs': 16}
-2: q="How many legs are there in total if you have 1 crab, 2 lobsters, 1 human, 1 cow, 1 bee?", a="42"
-...
-```
+### 📊 `eval/`
+- **`eval_vllm.py`**: Custom evaluation script using vllm for fast inference.
+- **`sbatch.sh`**: SLURM batch submission script to run `eval_vllm.py` in distributed or cluster environments.
 
-## 🔍 Evaluation
+### 📈 `notebooks/`
+- **`visualization.ipynb`**: Jupyter notebook to visualize:
+  - Reasoning Gym performance metrics.
+  - Token-to-Token Ratio (TTR) plots for analysis.
 
-Instructions for running the evaluation scripts are provided in [eval/README.md](https://github.com/open-thought/reasoning-gym/blob/main/eval/README.md).
+### 🔎 `retrieval_websearch/`
+- Tools to run web-based retrieval and evaluate model performance using retrieved documents.
+- Useful for experiments involving RAG (Retrieval-Augmented Generation) workflows.
 
-Evaluation results of different reasoning models will be tracked in the [reasoning-gym-eval](https://github.com/open-thought/reasoning-gym-eval) repo.
 
-## 👷 Contributing
-
-Please see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-If you have ideas for dataset generators please create an issue here or contact us in the `#reasoning-gym` channel of the [GPU-Mode discord server](https://discord.gg/gpumode).
-
-[![](https://dcbadge.limes.pink/api/server/gpumode?style=flat)](https://discord.gg/gpumode)
